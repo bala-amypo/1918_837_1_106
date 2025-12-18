@@ -1,5 +1,5 @@
 package com.example.demo.exception;
 
-public class ResourceNotFoundE{
+public class ResourceNotFoundException.java{
     
 }
