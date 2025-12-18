@@ -1,5 +1,5 @@
-package com.example.demo.uti;
+package com.example.demo.util;
 
-public class servicepr{
+public class ValidationUtil.java{
     
 }
