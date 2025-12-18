@@ -11,6 +11,9 @@ public class Sensor{
     private String sensorCode;
     private String sensorType;
     private String location;
+    private LocalDateTime installedAt;
+    private Boolean isActive;
+
     
     
 }
