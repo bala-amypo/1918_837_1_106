@@ -1,5 +1,5 @@
-package com.example.demo.controller.java;
+package com.example.demo.controller;
 
-public class servicepr{
+public class controllerpr.java{
     
 }
