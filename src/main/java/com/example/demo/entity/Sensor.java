@@ -61,6 +61,10 @@ public Boolean getIsActive() {
 public void setIsActive(Boolean isActive) {
     this.isActive = isActive;
 }
+public sensor(Long id, String sensorCode,String sensorType, String location,LocalDateTime installedAt,Boolean isActive){
+     this.id = id;
+     this.
+}
 
     
 }
