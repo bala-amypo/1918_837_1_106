@@ -1,5 +1,5 @@
-package com.example.demo.service;
+package com.example.demo.config;
 
-public class servicepr{
+public class JwtAuthenticationFilter.java{
     
 }
