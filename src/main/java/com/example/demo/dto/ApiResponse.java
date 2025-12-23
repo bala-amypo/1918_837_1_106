@@ -1,40 +1,30 @@
 package com.example.demo.dto;
 
-public class ApiResponse {
+public class AuthRequest {
+    private String email;
+    private String password;
 
-    private boolean success;
-    private String message;
-    private Object data;
-
-    public ApiResponse() {}
-
-    public ApiResponse(boolean success, String message, Object data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
+    public AuthRequest() {
     }
 
-    public boolean isSuccess() {
-        return success;
+    public AuthRequest(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public String getEmail() {
+        return email;
     }
 
-    public String getMessage() {
-        return message;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getPassword() {
+        return password;
     }
 
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,3 +1,4 @@
+//SensorController
 package com.example.demo.controller;
 
 import com.example.demo.entity.Sensor;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sensors")
+@RequestMapping("/sensors")
 public class SensorController {
 
     private final SensorService sensorService;
@@ -17,18 +18,18 @@ public class SensorController {
     }
 
     @PostMapping("/{locationId}")
-    public Sensor createSensor(@PathVariable Long locationId,
-                               @RequestBody Sensor sensor) {
+    public Sensor create(@PathVariable Long locationId,
+                         @RequestBody Sensor sensor) {
         return sensorService.createSensor(locationId, sensor);
     }
 
-    @GetMapping
-    public List<Sensor> getAllSensors() {
-        return sensorService.getAllSensors();
+    @GetMapping("/{id}")
+    public Sensor get(@PathVariable Long id) {
+        return sensorService.getSensor(id);
     }
 
-    @GetMapping("/{id}")
-    public Sensor getSensor(@PathVariable Long id) {
-        return sensorService.getSensor(id);
+    @GetMapping
+    public List<Sensor> getAll() {
+        return sensorService.getAllSensors();
     }
 }
