@@ -1,36 +1,15 @@
 package com.example.demo.dto;
 
-public class AuthResponse {
-    private String token;
-    private Long userId;
+public class AuthRequest {
     private String email;
-    private String role;
+    private String password;
 
-    public AuthResponse() {
+    public AuthRequest() {
     }
 
-    public AuthResponse(String token, Long userId, String email, String role) {
-        this.token = token;
-        this.userId = userId;
+    public AuthRequest(String email, String password) {
         this.email = email;
-        this.role = role;
-    }
-
-    // Getters and Setters
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -41,11 +20,11 @@ public class AuthResponse {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
