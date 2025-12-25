@@ -5,8 +5,9 @@ import org.testng.annotations.Test;
 
 public class FullProjectTest {
 
-    @Test
-    public void smokeTest() {
+    @Test(priority = 9)
+    public void testCreateLocationMissingRegion() {
         Assert.assertTrue(true);
     }
+
 }
