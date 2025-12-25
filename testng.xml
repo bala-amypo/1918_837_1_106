@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Water Quality API Suite">
-    <test name="Smoke Test">
+<suite name="Full Test Suite">
+    <test name="All Tests">
         <classes>
             <class name="com.example.demo.FullProjectTest"/>
         </classes>
