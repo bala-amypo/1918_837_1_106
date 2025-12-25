@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class FullProjectTest {
 
     @Test
-    public void contextLoads() {
+    public void smokeTest() {
         Assert.assertTrue(true);
     }
 }
