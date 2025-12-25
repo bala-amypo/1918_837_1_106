@@ -35,12 +35,53 @@ public class ComplianceLog {
         this.loggedAt = loggedAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // ---------- GETTERS & SETTERS ----------
 
-    public SensorReading getSensorReading() { return sensorReading; }
-    public void setSensorReading(SensorReading sensorReading) { this.sensorReading = sensorReading; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getStatusAssigned() { return statusAssigned; }
-    public void setStatusAssigned(String statusAssigned) { this.statusAssigned = statusAssigned; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public SensorReading getSensorReading() {
+        return sensorReading;
+    }
+
+    public void setSensorReading(SensorReading sensorReading) {
+        this.sensorReading = sensorReading;
+    }
+
+    public ComplianceThreshold getThresholdUsed() {
+        return thresholdUsed;
+    }
+
+    public void setThresholdUsed(ComplianceThreshold thresholdUsed) {
+        this.thresholdUsed = thresholdUsed;
+    }
+
+    public String getStatusAssigned() {
+        return statusAssigned;
+    }
+
+    public void setStatusAssigned(String statusAssigned) {
+        this.statusAssigned = statusAssigned;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public LocalDateTime getLoggedAt() {
+        return loggedAt;
+    }
+
+    public void setLoggedAt(LocalDateTime loggedAt) {
+        this.loggedAt = loggedAt;
+    }
 }
