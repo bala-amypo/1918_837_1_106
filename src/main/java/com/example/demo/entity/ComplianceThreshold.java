@@ -4,28 +4,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "sensorType"))
+@Table(name = "compliance_thresholds")
 public class ComplianceThreshold {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String sensorType;
+
     private Double minValue;
     private Double maxValue;
     private String severityLevel;
+    private LocalDateTime createdAt;
 
-    @Column(updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    // Default Constructor (Required by JPA)
     public ComplianceThreshold() {}
 
-    // Parameterized Constructor
-    public ComplianceThreshold(Long id, String sensorType, Double minValue, Double maxValue, String severityLevel,
-                                LocalDateTime createdAt) {
-        this.id = id;
+    public ComplianceThreshold(String sensorType, Double minValue,
+                               Double maxValue, String severityLevel,
+                               LocalDateTime createdAt) {
         this.sensorType = sensorType;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -33,7 +31,6 @@ public class ComplianceThreshold {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -48,7 +45,4 @@ public class ComplianceThreshold {
 
     public String getSeverityLevel() { return severityLevel; }
     public void setSeverityLevel(String severityLevel) { this.severityLevel = severityLevel; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
