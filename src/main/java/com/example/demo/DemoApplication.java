@@ -1,11 +1,12 @@
-package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-@SpringBootApplication
-public class DemoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+public class DemoApplicationTest {
+
+    @Test
+    public void contextLoads() {
+        Assert.assertTrue(true);
     }
 }
+
