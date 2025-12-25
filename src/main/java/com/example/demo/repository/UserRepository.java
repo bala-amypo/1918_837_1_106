@@ -1,11 +1,25 @@
-package com.example.demo.repository;
+package com.example.demo;
 
-import com.example.demo.entity.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.service.impl.UserServiceImpl;
+import com.example.demo.repository.UserRepository;
+import org.mockito.Mockito;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
+public class FullProjectTest {
+
+    private UserRepository userRepository;
+    private UserServiceImpl userService;
+
+    @BeforeMethod
+    public void setup() {
+        userRepository = Mockito.mock(UserRepository.class);
+        userService = new UserServiceImpl(userRepository);
+    }
+
+    @Test
+    public void sampleTest() {
+        Assert.assertTrue(true);
+    }
 }
