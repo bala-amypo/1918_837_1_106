@@ -30,4 +30,4 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     public List<ComplianceThreshold> getThresholds() {
         return thresholdRepository.findAll();
     }
-}/
+}
