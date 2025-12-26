@@ -28,7 +28,7 @@ public class JwtTokenProvider {
         this.validityInMilliseconds = 24 * 60 * 60 * 1000L; // 1 day
     }
 
-    // Validate token — used in JwtAuthenticationFilter
+    // Validate token
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -38,4 +38,28 @@ public class JwtTokenProvider {
         }
     }
 
-    // Generate token — matches AuthController signature
+    // Generate token
+    public String generateToken(Long id, String email, String role) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
+
+        return Jwts.builder()
+                .claim("id", id)
+                .claim("email", email)
+                .claim("role", role)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // Get email/username from token
+    public String getUsernameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("email", String.class);
+    }
+} // <-- This closing brace was likely missing in your file
