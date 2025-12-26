@@ -25,6 +25,18 @@ public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationServ
     public List<ComplianceLog> evaluateCompliance() {
         return logRepository.findAll();
     }
+@Override
+public ComplianceLog evaluateReading(Long readingId) {
+    ComplianceLog log = new ComplianceLog();
+    log.setReadingId(readingId);
+    log.setStatus("COMPLIANT");
+    return logRepository.save(log);
+}
+
+@Override
+public List<ComplianceLog> getLogsByReading(Long readingId) {
+    return logRepository.findByReadingId(readingId);
+}
 
     @Override
     public List<ComplianceThreshold> getThresholds() {
