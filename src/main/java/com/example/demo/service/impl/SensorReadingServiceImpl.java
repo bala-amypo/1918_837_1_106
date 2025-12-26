@@ -11,24 +11,30 @@ import java.util.Optional;
 @Service
 public class SensorReadingServiceImpl implements SensorReadingService {
 
-    private final SensorReadingRepository sensorReadingRepository;
+    private final SensorReadingRepository repository;
 
-    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository) {
-        this.sensorReadingRepository = sensorReadingRepository;
+    public SensorReadingServiceImpl(SensorReadingRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public SensorReading save(SensorReading reading) {
-        return sensorReadingRepository.save(reading);
+        return repository.save(reading);
     }
 
     @Override
-    public List<SensorReading> findAll() {
-        return sensorReadingRepository.findAll();
+    public List<SensorReading> getReadingsBySensor(Long sensorId) {
+        return repository.findBySensorId(sensorId);
     }
 
     @Override
-    public Optional<SensorReading> findById(Long id) {
-        return sensorReadingRepository.findById(id);
+    public Optional<SensorReading> getReading(Long readingId) {
+        return repository.findById(readingId);
+    }
+
+    @Override
+    public void submitReading(Long sensorId, SensorReading reading) {
+        reading.setSensorId(sensorId);
+        repository.save(reading);
     }
 }
