@@ -1,28 +1,37 @@
 package com.example.demo.service.impl;
 
-import org.springframework.stereotype.Service;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.repository.UserRepository;
-import com.example.demo.entity.User;
-
-@Service
 public class UserServiceImpl {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    // ✅ REQUIRED BY TESTS + CONTROLLER
+    public User register(User user) {
+        userRepository.findByEmail(user.getEmail())
+                .ifPresent(u -> {
+                    throw new IllegalArgumentException("email already exists");
+                });
+
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    // ✅ REQUIRED BY CONTROLLER
+    public User login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("invalid email"));
+
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("invalid password");
+        }
+        return user;
     }
 }
