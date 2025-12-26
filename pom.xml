@@ -15,9 +15,6 @@
     <name>Water Quality Compliance Monitoring API</name>
     <description>Spring Boot Backend with TestNG</description>
 
-    <!-- ========================= -->
-    <!-- Spring Boot Parent -->
-    <!-- ========================= -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -25,18 +22,11 @@
         <relativePath/>
     </parent>
 
-    <!-- ========================= -->
-    <!-- Java Version -->
-    <!-- ========================= -->
     <properties>
         <java.version>17</java.version>
     </properties>
 
-    <!-- ========================= -->
-    <!-- Dependencies -->
-    <!-- ========================= -->
     <dependencies>
-
         <!-- Spring Boot Core -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -81,9 +71,12 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- ========================= -->
-        <!-- TEST DEPENDENCIES -->
-        <!-- ========================= -->
+        <!-- MySQL Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.1.1</version>
+        </dependency>
 
         <!-- TestNG -->
         <dependency>
@@ -113,41 +106,30 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
     </dependencies>
 
-    <!-- ========================= -->
-    <!-- Build & Plugins -->
-    <!-- ========================= -->
     <build>
         <plugins>
-
-            <!-- Spring Boot Plugin -->
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ✅ TESTNG ENABLED -->
+            <!-- Surefire Plugin for TestNG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>com.example.demo.TestResultListener</value>
-                        </property>
-                    </properties>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
                 </configuration>
             </plugin>
 
-            <!-- ✅ FINAL FIX: allow tests in src/main/java -->
+            <!-- Build Helper Plugin for src/main/java tests -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -167,7 +149,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
