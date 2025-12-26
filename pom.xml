@@ -101,7 +101,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Boot Test (JUnit excluded, TestNG used) -->
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -134,24 +134,38 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-
-                    <!-- IMPORTANT: enable TestNG -->
                     <testNGArtifactName>org.testng:testng</testNGArtifactName>
-
-                    <!-- Run *Test.java -->
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
-
-                    <!-- Listener for logging -->
                     <properties>
                         <property>
                             <name>listener</name>
                             <value>com.example.demo.TestResultListener</value>
                         </property>
                     </properties>
-
                 </configuration>
+            </plugin>
+
+            <!-- ✅ FINAL FIX: allow tests in src/main/java -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
