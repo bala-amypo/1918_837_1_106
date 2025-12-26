@@ -2,7 +2,9 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Location;
 import com.example.demo.repository.LocationRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LocationServiceImpl {
 
     private final LocationRepository repo;

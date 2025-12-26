@@ -2,56 +2,30 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Sensor;
 import com.example.demo.entity.SensorReading;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.SensorReadingRepository;
 import com.example.demo.repository.SensorRepository;
-import com.example.demo.service.SensorReadingService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+@Service
+public class SensorReadingServiceImpl {
 
-@Service   // ✅ THIS WAS MISSING
-public class SensorReadingServiceImpl implements SensorReadingService {
+    private final SensorReadingRepository readingRepo;
+    private final SensorRepository sensorRepo;
 
-    private final SensorReadingRepository sensorReadingRepository;
-    private final SensorRepository sensorRepository;
-
-    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository,
-                                    SensorRepository sensorRepository) {
-        this.sensorReadingRepository = sensorReadingRepository;
-        this.sensorRepository = sensorRepository;
+    public SensorReadingServiceImpl(SensorReadingRepository readingRepo, SensorRepository sensorRepo) {
+        this.readingRepo = readingRepo;
+        this.sensorRepo = sensorRepo;
     }
 
-    @Override
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
-
-        Sensor sensor = sensorRepository.findById(sensorId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
-
-        if (reading.getReadingValue() == null || reading.getReadingValue() == 0) {
-            throw new IllegalArgumentException("readingvalue");
-        }
-
-        if (reading.getReadingTime() != null &&
-                reading.getReadingTime().isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("readingvalue");
-        }
-
+        Sensor sensor = sensorRepo.findById(sensorId)
+                .orElseThrow(() -> new RuntimeException("Sensor not found"));
         reading.setSensor(sensor);
-        reading.setStatus("PENDING");
-
-        return sensorReadingRepository.save(reading);
+        return readingRepo.save(reading);
     }
 
-    @Override
     public SensorReading getReading(Long id) {
-        return sensorReadingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
-    }
-
-    @Override
-    public List<SensorReading> getReadingsBySensor(Long sensorId) {
-        return sensorReadingRepository.findBySensor_Id(sensorId);
+        return readingRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reading not found"));
     }
 }

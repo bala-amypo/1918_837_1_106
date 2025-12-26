@@ -1,9 +1,16 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
-import java.util.*;
+import com.example.demo.entity.ComplianceLog;
+import com.example.demo.entity.ComplianceThreshold;
+import com.example.demo.entity.SensorReading;
+import com.example.demo.repository.ComplianceLogRepository;
+import com.example.demo.repository.ComplianceThresholdRepository;
+import com.example.demo.repository.SensorReadingRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class ComplianceEvaluationServiceImpl {
 
     private final SensorReadingRepository readingRepo;

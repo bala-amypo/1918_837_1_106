@@ -1,8 +1,14 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.Location;
+import com.example.demo.entity.Sensor;
+import com.example.demo.repository.LocationRepository;
+import com.example.demo.repository.SensorRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class SensorServiceImpl {
 
     private final SensorRepository repo;
@@ -28,7 +34,7 @@ public class SensorServiceImpl {
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public java.util.List<Sensor> getAllSensors() {
+    public List<Sensor> getAllSensors() {
         return repo.findAll();
     }
 }
