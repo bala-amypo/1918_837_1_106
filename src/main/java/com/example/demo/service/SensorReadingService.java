@@ -1,12 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.SensorReading;
+
 import java.util.List;
-import java.util.Optional;
 
 public interface SensorReadingService {
-    SensorReading save(SensorReading reading);
+
+    SensorReading submitReading(Long sensorId, SensorReading reading);
+
+    SensorReading getReading(Long id);
+
     List<SensorReading> getReadingsBySensor(Long sensorId);
-    Optional<SensorReading> getReading(Long readingId);
-    void submitReading(Long sensorId, SensorReading reading);
 }

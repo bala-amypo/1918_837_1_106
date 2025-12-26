@@ -1,26 +1,36 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Location;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
-import org.springframework.stereotype.Service;
+import com.example.demo.service.LocationService;
 
-@Service
-public class LocationServiceImpl {
+import java.util.List;
 
-    private final LocationRepository repo;
+public class LocationServiceImpl implements LocationService {
 
-    public LocationServiceImpl(LocationRepository repo) {
-        this.repo = repo;
+    private final LocationRepository locationRepository;
+
+    public LocationServiceImpl(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
     }
 
-    public Location createLocation(Location l) {
-        if (l.getRegion() == null)
+    @Override
+    public Location createLocation(Location location) {
+        if (location.getRegion() == null || location.getRegion().isEmpty()) {
             throw new IllegalArgumentException("region required");
-        return repo.save(l);
+        }
+        return locationRepository.save(location);
     }
 
+    @Override
     public Location getLocation(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+        return locationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
+    }
+
+    @Override
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();
     }
 }

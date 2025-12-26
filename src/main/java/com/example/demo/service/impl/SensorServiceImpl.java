@@ -2,39 +2,45 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Location;
 import com.example.demo.entity.Sensor;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
-import org.springframework.stereotype.Service;
+import com.example.demo.service.SensorService;
 
 import java.util.List;
 
-@Service
-public class SensorServiceImpl {
+public class SensorServiceImpl implements SensorService {
 
-    private final SensorRepository repo;
-    private final LocationRepository locationRepo;
+    private final SensorRepository sensorRepository;
+    private final LocationRepository locationRepository;
 
-    public SensorServiceImpl(SensorRepository repo, LocationRepository locationRepo) {
-        this.repo = repo;
-        this.locationRepo = locationRepo;
+    public SensorServiceImpl(SensorRepository sensorRepository,
+                             LocationRepository locationRepository) {
+        this.sensorRepository = sensorRepository;
+        this.locationRepository = locationRepository;
     }
 
-    public Sensor createSensor(Long locationId, Sensor s) {
-        if (s.getSensorType() == null)
-            throw new IllegalArgumentException("sensorType required");
+    @Override
+    public Sensor createSensor(Long locationId, Sensor sensor) {
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
 
-        Location loc = locationRepo.findById(locationId)
-                .orElseThrow(() -> new RuntimeException("not found"));
-        s.setLocation(loc);
-        return repo.save(s);
+        if (sensor.getSensorType() == null || sensor.getSensorType().isEmpty()) {
+            throw new IllegalArgumentException("sensorType");
+        }
+
+        sensor.setLocation(location);
+        return sensorRepository.save(sensor);
     }
 
+    @Override
     public Sensor getSensor(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+        return sensorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
     }
 
+    @Override
     public List<Sensor> getAllSensors() {
-        return repo.findAll();
+        return sensorRepository.findAll();
     }
 }
