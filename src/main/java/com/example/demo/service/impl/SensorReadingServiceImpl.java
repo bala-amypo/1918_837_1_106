@@ -1,31 +1,11 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
-import com.example.demo.entity.Sensor;
 import com.example.demo.entity.SensorReading;
-import com.example.demo.repository.SensorReadingRepository;
-import com.example.demo.repository.SensorRepository;
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-public class SensorReadingServiceImpl {
-
-    private final SensorReadingRepository readingRepo;
-    private final SensorRepository sensorRepo;
-
-    public SensorReadingServiceImpl(SensorReadingRepository readingRepo, SensorRepository sensorRepo) {
-        this.readingRepo = readingRepo;
-        this.sensorRepo = sensorRepo;
-    }
-
-    public SensorReading submitReading(Long sensorId, SensorReading reading) {
-        Sensor sensor = sensorRepo.findById(sensorId)
-                .orElseThrow(() -> new RuntimeException("Sensor not found"));
-        reading.setSensor(sensor);
-        return readingRepo.save(reading);
-    }
-
-    public SensorReading getReading(Long id) {
-        return readingRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reading not found"));
-    }
+public interface SensorReadingService {
+    SensorReading save(SensorReading reading);
+    List<SensorReading> findAll();
+    Optional<SensorReading> findById(Long id);
 }
