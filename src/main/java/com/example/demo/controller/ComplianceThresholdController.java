@@ -1,33 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ComplianceThreshold;
-import com.example.demo.service.ComplianceThresholdService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/thresholds")
 public class ComplianceThresholdController {
-
-    private final ComplianceThresholdService service;
-
-    public ComplianceThresholdController(ComplianceThresholdService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ComplianceThreshold create(@RequestBody ComplianceThreshold t) {
-        return service.createThreshold(t);
-    }
-
-    @GetMapping
-    public List<ComplianceThreshold> all() {
-        return service.getAllThresholds();
-    }
-
-    @GetMapping("/{id}")
-    public ComplianceThreshold get(@PathVariable Long id) {
-        return service.getThreshold(id);
-    }
 }
