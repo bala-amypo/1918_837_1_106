@@ -1,29 +1,24 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Location;
-import com.example.demo.service.LocationService;
+import com.example.demo.service.impl.LocationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/locations")
+@RequestMapping("/locations")
 public class LocationController {
 
-    private final LocationService service;
+    private final LocationServiceImpl service;
 
-    public LocationController(LocationService service) {
+    public LocationController(LocationServiceImpl service) {
         this.service = service;
     }
 
     @PostMapping
     public Location create(@RequestBody Location location) {
         return service.createLocation(location);
-    }
-
-    @GetMapping
-    public List<Location> all() {
-        return service.getAllLocations();
     }
 
     @GetMapping("/{id}")
