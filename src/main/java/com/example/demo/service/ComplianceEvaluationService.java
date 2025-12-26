@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.ComplianceLog;
+import com.example.demo.entity.ComplianceThreshold;
 import java.util.List;
+
 public interface ComplianceEvaluationService {
-    ComplianceLog evaluateReading(Long readingId);
-    List<ComplianceLog> getLogsByReading(Long readingId);
-    ComplianceLog getLog(Long id);
+    List<ComplianceLog> evaluateCompliance();
+    List<ComplianceThreshold> getThresholds();
 }
