@@ -11,7 +11,10 @@ public class Sensor {
 
     private String name;
 
-    // ✅ REQUIRED FIELD
+    // ✅ ADD THIS FIELD (MATCH REPOSITORY)
+    @Column(unique = true, nullable = false)
+    private String sensorCode;
+
     private String sensorType;
 
     @ManyToOne
@@ -28,7 +31,11 @@ public class Sensor {
         return name;
     }
 
-    public String getSensorType() {   // ✅ THIS FIXES ERROR #2
+    public String getSensorCode() {
+        return sensorCode;
+    }
+
+    public String getSensorType() {
         return sensorType;
     }
 
@@ -42,6 +49,10 @@ public class Sensor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setSensorCode(String sensorCode) {
+        this.sensorCode = sensorCode;
     }
 
     public void setSensorType(String sensorType) {
