@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/compliance")
+@RequestMapping("/compliance")
 public class ComplianceEvaluationController {
 
     private final ComplianceEvaluationService evaluationService;
 
-    public ComplianceEvaluationController(ComplianceEvaluationService evaluationService) {
+    public ComplianceEvaluationController(
+            ComplianceEvaluationService evaluationService) {
         this.evaluationService = evaluationService;
     }
 
@@ -21,12 +22,12 @@ public class ComplianceEvaluationController {
         return evaluationService.evaluateReading(readingId);
     }
 
-    @GetMapping("/reading/{readingId}")
-    public List<ComplianceLog> getLogsByReading(@PathVariable Long readingId) {
+    @GetMapping("/logs/{readingId}")
+    public List<ComplianceLog> getLogs(@PathVariable Long readingId) {
         return evaluationService.getLogsByReading(readingId);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/log/{id}")
     public ComplianceLog getLog(@PathVariable Long id) {
         return evaluationService.getLog(id);
     }

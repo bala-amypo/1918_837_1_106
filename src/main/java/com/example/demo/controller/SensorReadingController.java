@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/readings")
+@RequestMapping("/readings")
 public class SensorReadingController {
 
     private final SensorReadingService readingService;
@@ -16,9 +16,10 @@ public class SensorReadingController {
         this.readingService = readingService;
     }
 
-    @PostMapping("/{sensorId}")
-    public SensorReading submitReading(@PathVariable Long sensorId,
-                                       @RequestBody SensorReading reading) {
+    @PostMapping("/sensor/{sensorId}")
+    public SensorReading submitReading(
+            @PathVariable Long sensorId,
+            @RequestBody SensorReading reading) {
         return readingService.submitReading(sensorId, reading);
     }
 
