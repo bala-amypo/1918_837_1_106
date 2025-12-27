@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "sensors")
 public class Sensor {
 
     @Id
@@ -19,69 +18,24 @@ public class Sensor {
     @ManyToOne
     private Location location;
 
-    private LocalDateTime installedAt;
+    private LocalDateTime installedAt = LocalDateTime.now();
 
     private Boolean isActive = true;
 
-    public Sensor() {
-        this.isActive = true;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Sensor(String sensorCode, String sensorType, Location location,
-                  LocalDateTime installedAt, Boolean isActive) {
-        this.sensorCode = sensorCode;
-        this.sensorType = sensorType;
-        this.location = location;
-        this.installedAt = installedAt;
-        this.isActive = (isActive != null) ? isActive : true;
-    }
+    public String getSensorCode() { return sensorCode; }
+    public void setSensorCode(String sensorCode) { this.sensorCode = sensorCode; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getSensorType() { return sensorType; }
+    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
 
-    public String getSensorCode() {
-        return sensorCode;
-    }
+    public LocalDateTime getInstalledAt() { return installedAt; }
 
-    public void setSensorCode(String sensorCode) {
-        this.sensorCode = sensorCode;
-    }
-
-    public String getSensorType() {
-        return sensorType;
-    }
-
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public LocalDateTime getInstalledAt() {
-        return installedAt;
-    }
-
-    public void setInstalledAt(LocalDateTime installedAt) {
-        this.installedAt = installedAt;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean active) {
-        this.isActive = active;
-    }
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean active) { isActive = active; }
 }
-
