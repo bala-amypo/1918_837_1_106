@@ -1,15 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Sensor;
+import com.example.demo.entity.User;
 
-import java.util.List;
+public interface UserService {
 
-public interface SensorService {
+    User register(User user);
 
-    Sensor createSensor(Long locationId, Sensor sensor);
+    User findByEmail(String email);
 
-    Sensor getSensor(Long id);
-
-    List<Sensor> getAllSensors();
+    User findById(Long id);
 }
-
