@@ -24,3 +24,4 @@ public class AuthRequest {
         this.password = password;
     }
 }
+

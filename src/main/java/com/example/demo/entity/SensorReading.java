@@ -71,3 +71,4 @@ public class SensorReading {
         this.status = status;
     }
 }
+
