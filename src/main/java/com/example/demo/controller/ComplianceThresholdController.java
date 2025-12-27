@@ -10,29 +10,29 @@ import java.util.List;
 @RequestMapping("/api/thresholds")
 public class ComplianceThresholdController {
 
-    private final ComplianceThresholdService service;
+    private final ComplianceThresholdService thresholdService;
 
-    public ComplianceThresholdController(ComplianceThresholdService service) {
-        this.service = service;
+    public ComplianceThresholdController(ComplianceThresholdService thresholdService) {
+        this.thresholdService = thresholdService;
     }
 
     @PostMapping
-    public ComplianceThreshold create(@RequestBody ComplianceThreshold threshold) {
-        return service.createThreshold(threshold);
+    public ComplianceThreshold createThreshold(@RequestBody ComplianceThreshold threshold) {
+        return thresholdService.createThreshold(threshold);
     }
 
     @GetMapping("/{id}")
-    public ComplianceThreshold get(@PathVariable Long id) {
-        return service.getThreshold(id);
+    public ComplianceThreshold getThreshold(@PathVariable Long id) {
+        return thresholdService.getThreshold(id);
     }
 
-    @GetMapping("/sensor/{type}")
-    public ComplianceThreshold getBySensorType(@PathVariable String type) {
-        return service.getThresholdBySensorType(type);
+    @GetMapping("/sensor/{sensorType}")
+    public ComplianceThreshold getBySensorType(@PathVariable String sensorType) {
+        return thresholdService.getThresholdBySensorType(sensorType);
     }
 
     @GetMapping
-    public List<ComplianceThreshold> getAll() {
-        return service.getAllThresholds();
+    public List<ComplianceThreshold> getAllThresholds() {
+        return thresholdService.getAllThresholds();
     }
 }
