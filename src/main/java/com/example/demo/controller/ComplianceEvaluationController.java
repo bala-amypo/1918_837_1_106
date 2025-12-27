@@ -1,21 +1,33 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.ComplianceLog;
 import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/compliance")
 public class ComplianceEvaluationController {
 
-    private final ComplianceEvaluationService complianceService;
+    private final ComplianceEvaluationService service;
 
-    public ComplianceEvaluationController(
-            ComplianceEvaluationService complianceService) {
-        this.complianceService = complianceService;
+    public ComplianceEvaluationController(ComplianceEvaluationService service) {
+        this.service = service;
     }
 
-    @GetMapping("/{sensorId}")
-    public String evaluate(@PathVariable Long sensorId) {
-        return complianceService.evaluateCompliance(sensorId);
+    @PostMapping("/evaluate/{readingId}")
+    public ComplianceLog evaluate(@PathVariable Long readingId) {
+        return service.evaluateReading(readingId);
+    }
+
+    @GetMapping("/reading/{readingId}")
+    public List<ComplianceLog> getByReading(@PathVariable Long readingId) {
+        return service.getLogsByReading(readingId);
+    }
+
+    @GetMapping("/{id}")
+    public ComplianceLog get(@PathVariable Long id) {
+        return service.getLog(id);
     }
 }

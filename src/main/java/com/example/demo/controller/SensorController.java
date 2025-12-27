@@ -2,8 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Sensor;
 import com.example.demo.service.SensorService;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,26 +16,19 @@ public class SensorController {
         this.sensorService = sensorService;
     }
 
-    // ✅ GET ALL SENSORS (NO PARAMS – CORRECT)
-    @Operation(summary = "Get all sensors")
+    @PostMapping("/{locationId}")
+    public Sensor createSensor(@PathVariable Long locationId,
+                               @RequestBody Sensor sensor) {
+        return sensorService.createSensor(locationId, sensor);
+    }
+
+    @GetMapping("/{id}")
+    public Sensor getSensor(@PathVariable Long id) {
+        return sensorService.getSensor(id);
+    }
+
     @GetMapping
     public List<Sensor> getAllSensors() {
         return sensorService.getAllSensors();
-    }
-
-    // ✅ POST SENSOR WITH PATH PARAM (THIS WAS NOT SHOWING)
-    @Operation(summary = "Add sensor to a location")
-    @PostMapping("/{locationId}")
-    public Sensor addSensor(
-            @Parameter(description = "Location ID", example = "1")
-            @PathVariable Long locationId,
-
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Sensor details",
-                    required = true
-            )
-            @RequestBody Sensor sensor
-    ) {
-        return sensorService.addSensor(locationId, sensor);
     }
 }
