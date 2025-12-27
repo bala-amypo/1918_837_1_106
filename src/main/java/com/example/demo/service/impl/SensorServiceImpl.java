@@ -1,25 +1,38 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.Location;
 import com.example.demo.entity.Sensor;
+import com.example.demo.repository.LocationRepository;
+import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SensorServiceImpl implements SensorService {
 
-    private final List<Sensor> sensors = new ArrayList<>();
+    private final SensorRepository sensorRepository;
+    private final LocationRepository locationRepository;
+
+    // ✅ THIS CONSTRUCTOR FIXES ERROR #1
+    public SensorServiceImpl(SensorRepository sensorRepository,
+                             LocationRepository locationRepository) {
+        this.sensorRepository = sensorRepository;
+        this.locationRepository = locationRepository;
+    }
 
     @Override
     public List<Sensor> getAllSensors() {
-        return sensors;
+        return sensorRepository.findAll();
     }
 
     @Override
     public Sensor addSensor(Long locationId, Sensor sensor) {
-        sensors.add(sensor);
-        return sensor;
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new RuntimeException("Location not found"));
+
+        sensor.setLocation(location);
+        return sensorRepository.save(sensor);
     }
 }

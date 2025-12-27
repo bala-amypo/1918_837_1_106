@@ -10,29 +10,45 @@ public class Sensor {
     private Long id;
 
     private String name;
-    private String type;
+
+    // ✅ REQUIRED FIELD
+    private String sensorType;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    // getters & setters
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public String getSensorType() {   // ✅ THIS FIXES ERROR #2
+        return sensorType;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
