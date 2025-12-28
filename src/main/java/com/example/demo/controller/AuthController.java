@@ -1,44 +1,47 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
+import com.example.demo.config.JwtTokenProvider;
+import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-import com.example.demo.config.JwtTokenProvider;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserService userService;
-    private final JwtTokenProvider tokenProvider =
-            new JwtTokenProvider("secret", 3600000);
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService,
+                          JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
-    }
-
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request) {
-        User user = userService.findByEmail(request.getEmail());
+    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
 
-        String token = tokenProvider.generateToken(
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
+        // Dummy auth for testing
+        User dbUser = userService.getUserByEmail(user.getEmail());
+
+        // ✅ FIX: Role must be ENUM, not String
+        Role role = dbUser.getRole(); // already Role type
+
+        String token = jwtTokenProvider.generateToken(
+                dbUser.getId(),
+                dbUser.getEmail(),
+                role
         );
 
-        return new AuthResponse(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
 }
