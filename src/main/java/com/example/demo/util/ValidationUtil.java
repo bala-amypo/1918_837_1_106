@@ -1,28 +1,51 @@
 package com.example.demo.util;
 
+import java.time.LocalDateTime;
+
 public class ValidationUtil {
 
-    public static void requireRegion(String region) {
-        if (region == null || region.trim().isEmpty()) {
-            throw new IllegalArgumentException("region required");
+    public static void validateString(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " is required");
         }
     }
 
-    public static void requireSensorType(String sensorType) {
-        if (sensorType == null || sensorType.trim().isEmpty()) {
-            throw new IllegalArgumentException("sensorType required");
+    public static void validatePositive(Double value, String fieldName) {
+        if (value == null || value <= 0) {
+            throw new IllegalArgumentException(fieldName + " must be positive");
         }
     }
 
-    public static void validateMinMax(Double min, Double max) {
+    public static void validateMinLessThanMax(Double min, Double max, String fieldName) {
         if (min == null || max == null || min >= max) {
-            throw new IllegalArgumentException("minvalue invalid");
+            throw new IllegalArgumentException("Invalid " + fieldName + ": minvalue must be less than maxvalue");
         }
     }
 
-    public static void requireReadingValue(Double value) {
-        if (value == null) {
-            throw new IllegalArgumentException("readingvalue missing");
+    public static void validateLatitude(Double latitude) {
+        if (latitude == null || latitude < -90 || latitude > 90) {
+            throw new IllegalArgumentException("Invalid latitude value");
+        }
+    }
+
+    public static void validateLongitude(Double longitude) {
+        if (longitude == null || longitude < -180 || longitude > 180) {
+            throw new IllegalArgumentException("Invalid longitude value");
+        }
+    }
+
+    public static void validateNotPastDate(LocalDateTime dateTime, String fieldName) {
+        if (dateTime == null) {
+            throw new IllegalArgumentException(fieldName + " is required");
+        }
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException(fieldName + " cannot be in the past");
+        }
+    }
+
+    public static void validateTrue(Boolean condition, String message) {
+        if (condition == null || !condition) {
+            throw new IllegalArgumentException(message);
         }
     }
 }
