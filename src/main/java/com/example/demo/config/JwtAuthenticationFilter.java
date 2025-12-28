@@ -1,44 +1,22 @@
-package com.example.demo.controller;
+package com.example.demo.config;
 
-import com.example.demo.config.JwtTokenProvider;
-import com.example.demo.entity.Role;
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
 
-@RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
-    public AuthController(UserService userService,
-                          JwtTokenProvider jwtTokenProvider) {
-        this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
-
-        User dbUser = userService.getUser(user.getId());
-
-        Role role = dbUser.getRole();
-
-        String token = jwtTokenProvider.generateToken(
-                dbUser.getId(),
-                dbUser.getEmail(),
-                role
-        );
-
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-
-        return ResponseEntity.ok(response);
+        // No logic for now (dummy filter)
+        filterChain.doFilter(request, response);
     }
 }
