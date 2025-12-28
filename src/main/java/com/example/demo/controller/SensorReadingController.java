@@ -7,28 +7,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/readings")
+@RequestMapping("/sensor-readings")
 public class SensorReadingController {
 
-    private final SensorReadingService service;
+    private final SensorReadingService sensorReadingService;
 
-    public SensorReadingController(SensorReadingService service) {
-        this.service = service;
+    public SensorReadingController(SensorReadingService sensorReadingService) {
+        this.sensorReadingService = sensorReadingService;
     }
 
-    @PostMapping("/{sensorId}")
-    public SensorReading submit(@PathVariable Long sensorId,
-                                @RequestBody SensorReading reading) {
-        return service.submitReading(sensorId, reading);
+    @PostMapping
+    public SensorReading create(@RequestBody SensorReading reading) {
+        return sensorReadingService.save(reading);
     }
 
-    @GetMapping("/{id}")
-    public SensorReading get(@PathVariable Long id) {
-        return service.getReading(id);
-    }
-
-    @GetMapping("/sensor/{sensorId}")
-    public List<SensorReading> getBySensor(@PathVariable Long sensorId) {
-        return service.getReadingsBySensor(sensorId);
+    @GetMapping
+    public List<SensorReading> getAll() {
+        return sensorReadingService.findAll();
     }
 }
