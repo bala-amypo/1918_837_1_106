@@ -6,12 +6,9 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
-import com.example.demo.util.ValidationUtil;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
@@ -25,10 +22,12 @@ public class SensorServiceImpl implements SensorService {
 
     @Override
     public Sensor createSensor(Long locationId, Sensor sensor) {
-        ValidationUtil.requireSensorType(sensor.getSensorType());
-
         Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new ResourceNotFoundException("location not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
+
+        if (sensor.getSensorType() == null || sensor.getSensorType().isEmpty()) {
+            throw new IllegalArgumentException("sensorType");
+        }
 
         sensor.setLocation(location);
         return sensorRepository.save(sensor);
@@ -37,7 +36,7 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public Sensor getSensor(Long id) {
         return sensorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("sensor not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
     }
 
     @Override
@@ -45,3 +44,4 @@ public class SensorServiceImpl implements SensorService {
         return sensorRepository.findAll();
     }
 }
+
