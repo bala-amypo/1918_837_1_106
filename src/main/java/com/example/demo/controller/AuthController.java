@@ -1,47 +1,26 @@
 package com.example.demo.controller;
 
-import com.example.demo.config.JwtTokenProvider;
-import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserService userService,
-                          JwtTokenProvider jwtTokenProvider) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
-
-        // Dummy auth for testing
-        User dbUser = userService.getUserByEmail(user.getEmail());
-
-        // ✅ FIX: Role must be ENUM, not String
-        Role role = dbUser.getRole(); // already Role type
-
-        String token = jwtTokenProvider.generateToken(
-                dbUser.getId(),
-                dbUser.getEmail(),
-                role
-        );
-
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-
-        return ResponseEntity.ok(response);
+    @GetMapping("/login")
+    public String login(@RequestParam String email) {
+        User user = userService.getUserByEmail(email);
+        return "Login successful for " + user.getEmail() +
+               " with role " + user.getRole();
     }
 }
