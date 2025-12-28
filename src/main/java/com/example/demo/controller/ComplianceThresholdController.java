@@ -3,11 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/thresholds")
+@RequestMapping("/thresholds")
 public class ComplianceThresholdController {
 
     private final ComplianceThresholdService service;
@@ -17,22 +16,22 @@ public class ComplianceThresholdController {
     }
 
     @PostMapping
-    public ComplianceThreshold create(@RequestBody ComplianceThreshold threshold) {
+    public ComplianceThreshold createThreshold(@RequestBody ComplianceThreshold threshold) {
         return service.createThreshold(threshold);
     }
 
     @GetMapping("/{id}")
-    public ComplianceThreshold get(@PathVariable Long id) {
+    public ComplianceThreshold getThreshold(@PathVariable Long id) {
         return service.getThreshold(id);
     }
 
-    @GetMapping("/sensor/{type}")
-    public ComplianceThreshold getBySensorType(@PathVariable String type) {
-        return service.getThresholdBySensorType(type);
+    @GetMapping("/sensor/{sensorType}")
+    public ComplianceThreshold getThresholdBySensorType(@PathVariable String sensorType) {
+        return service.getThresholdBySensorType(sensorType);
     }
 
     @GetMapping
-    public List<ComplianceThreshold> getAll() {
+    public List<ComplianceThreshold> getAllThresholds() {
         return service.getAllThresholds();
     }
 }
