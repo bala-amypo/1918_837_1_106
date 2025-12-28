@@ -15,7 +15,6 @@ public class ComplianceThreshold {
     private String sensorType;
     private double thresholdValue;
 
-    // Constructors
     public ComplianceThreshold() {}
 
     public ComplianceThreshold(String sensorType, double thresholdValue) {
@@ -23,28 +22,12 @@ public class ComplianceThreshold {
         this.thresholdValue = thresholdValue;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getSensorType() { return sensorType; }
+    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
 
-    public String getSensorType() {
-        return sensorType;
-    }
-
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-
-    public double getThresholdValue() {
-        return thresholdValue;
-    }
-
-    public void setThresholdValue(double thresholdValue) {
-        this.thresholdValue = thresholdValue;
-    }
+    public double getThresholdValue() { return thresholdValue; }
+    public void setThresholdValue(double thresholdValue) { this.thresholdValue = thresholdValue; }
 }
