@@ -4,34 +4,26 @@ import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.repository.ComplianceThresholdRepository;
 import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class ComplianceThresholdServiceImpl implements ComplianceThresholdService {
-
-    private final ComplianceThresholdRepository repository;
-
-    public ComplianceThresholdServiceImpl(ComplianceThresholdRepository repository) {
-        this.repository = repository;
+    private final ComplianceThresholdRepository thresholdRepository;
+    
+    public ComplianceThresholdServiceImpl(ComplianceThresholdRepository thresholdRepository) {
+        this.thresholdRepository = thresholdRepository;
     }
-
+    
     @Override
     public ComplianceThreshold createThreshold(ComplianceThreshold threshold) {
-        return repository.save(threshold);
+        if (threshold.getMinValue() >= threshold.getMaxValue()) {
+            throw new IllegalArgumentException("minValue must be less than maxValue");
+        }
+        return thresholdRepository.save(threshold);
     }
-
-    @Override
-    public ComplianceThreshold getThreshold(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
+    
     @Override
     public ComplianceThreshold getThresholdBySensorType(String sensorType) {
-        return repository.findBySensorType(sensorType).orElse(null);
-    }
-
-    @Override
-    public List<ComplianceThreshold> getAllThresholds() {
-        return repository.findAll();
+        return thresholdRepository.findBySensorType(sensorType)
+            .orElseThrow(() -> new RuntimeException("Threshold not found"));
     }
 }

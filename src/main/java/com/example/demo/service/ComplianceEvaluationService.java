@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.ComplianceLog;
+
 public interface ComplianceEvaluationService {
-    // Method to evaluate compliance by ID
-    String evaluateCompliance(Long id);
+    ComplianceLog evaluateReading(Long readingId);
 }
